@@ -3,6 +3,7 @@ public abstract class Cliente {
     protected String nome;
     protected String CNPJ;
     protected String endereco;
+
     protected double desconto;
     Cliente (String nome, String CNPJ, String endereco){
         this.nome = nome;
