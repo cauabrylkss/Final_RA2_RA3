@@ -21,8 +21,9 @@ public abstract class Cliente {
     }
 
     public double aplicar_desconto(double valor){
+        //
         if (this.desconto != 0){
-            return valor * this.desconto;
+            return valor - (valor * (this.desconto / 100))
         }
         return valor;
     }
