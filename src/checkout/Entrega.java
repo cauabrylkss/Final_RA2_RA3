@@ -22,6 +22,7 @@ public class Entrega implements Serializable {
         this.dicionarioPedidos = new HashMap<>();
         this.valorTotal = 0.0;
     }
+
     public Map<Integer, Pedido> getDicionarioPedidos() {
         return this.dicionarioPedidos;
     }
@@ -40,8 +41,6 @@ public class Entrega implements Serializable {
             soma += cliente.aplicarDesconto(pedido.getValorItem());
             this.valorTotal = soma;
 
-            //soma += pedido.getQuantidade() * pedido.getValorItem();
-            //if(this.cliente instanceof Supermercado){soma = soma *0.90}
         }
 
     }
@@ -51,4 +50,3 @@ public class Entrega implements Serializable {
 
 
 }
-

@@ -2,8 +2,11 @@ package checkout;
 
 import Produtos.Produto;
 
-public class Pedido {
+import java.io.Serializable;
 
+public class Pedido implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     protected int id;
     protected String cnpjCliente;
     private Produto produto;
