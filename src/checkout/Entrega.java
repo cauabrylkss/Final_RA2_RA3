@@ -1,11 +1,18 @@
 package checkout;
 import usuarios.Cliente;
-
+import usuarios.Supermercado;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Entrega {
+//entrega pedido-> logica e usuario
+
+public class Entrega implements Serializable {
+    //versão do Serializable
+    private static final long serialVersionUID = 1L;
+
     Cliente cliente;
+    Supermercado supermercado;
     Map<Integer,Pedido> dicionarioPedidos;
     protected double valorTotal;
 
@@ -15,21 +22,33 @@ public class Entrega {
         this.dicionarioPedidos = new HashMap<>();
         this.valorTotal = 0.0;
     }
+    public Map<Integer, Pedido> getDicionarioPedidos() {
+        return this.dicionarioPedidos;
+    }
 
     //[Numero do pedido,forma do macarrao,quantidade(kg),preco do kilo, valor do item]
 
     //add pedido no checkout
     public void adicionarPedido(Pedido novoPedido) {
-        //dar um set pedido
-        this.dicionarioPedidos.put(novoPedido.id, novoPedido);
+        this.dicionarioPedidos.put(novoPedido.getId(), novoPedido);
     }
 
-    public Map<Integer, Pedido> getDicionarioPedidos() {
-        return this.dicionarioPedidos;
+    public void calcular_valor_total(){
+        double soma =0.0;
+
+        for(Pedido pedido : dicionarioPedidos.values()){
+            soma += cliente.aplicarDesconto(pedido.getValorItem());
+            this.valorTotal = soma;
+
+            //soma += pedido.getQuantidade() * pedido.getValorItem();
+            //if(this.cliente instanceof Supermercado){soma = soma *0.90}
+        }
+
     }
-    public Cliente getCliente() {
-        return this.cliente;
-    }
+
+    public Cliente getCliente() {return this.cliente;}
+    public double getValorTotal(){return this.valorTotal;}
+
 
 }
 
