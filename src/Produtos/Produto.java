@@ -10,4 +10,8 @@ public abstract class Produto {
 
     public abstract double getMaxProducaoSemanal();
     public abstract String getForma();
+
+    public String toString() {
+        return getForma() + " | R$ " + String.format("%.2f", preco_kilograma) + "/kg";
+    }
 }

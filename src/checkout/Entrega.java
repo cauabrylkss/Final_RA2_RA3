@@ -33,18 +33,30 @@ public class Entrega implements Serializable {
         this.dicionarioPedidos.put(novoPedido.getId(), novoPedido);
     }
 
-    public void calcular_valor_total(){
+    public double calcular_valor_total(){
         double soma =0.0;
 
         for(Pedido pedido : dicionarioPedidos.values()){
             soma += cliente.aplicarDesconto(pedido.getValorItem());
         }
         this.valorTotal = soma;
+        return soma;
     }
 
     public Cliente getCliente() {return this.cliente;}
     public double getValorTotal(){return this.valorTotal;}
 
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(cliente.toString()).append("\n");
+        sb.append("Itens: \n");
+        for (Pedido p : dicionarioPedidos.values()){
+            sb.append("\t").append(p.toString()).append("\n");
+        }
+        sb.append("Valor Total: R$ ").append(String.format("%.2f", calcular_valor_total())).append("\n");
+        return sb.toString();
+    }
  /*   @Override
     public String toString() {
         return "Pedido #" + this.pedido.getId() + "CNPJ: "

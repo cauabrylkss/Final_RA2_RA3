@@ -17,4 +17,9 @@ public abstract class Cliente {
 
     public abstract double aplicarDesconto(double valorBruto);
     public abstract String getTipo();
+
+    @Override
+    public String toString() {
+        return getTipo() + ":" + nome + " | CNPJ: " + CNPJ + " | Endereço: " + endereco;
+    }
 }
