@@ -57,13 +57,5 @@ public class Entrega implements Serializable {
         sb.append("Valor Total: R$ ").append(String.format("%.2f", calcular_valor_total())).append("\n");
         return sb.toString();
     }
- /*   @Override
-    public String toString() {
-        return "Pedido #" + this.pedido.getId() + "CNPJ: "
-                + cliente + cliente.getCliente();
-                + quantidade + " kg"
-                + "Preco/Kg: " + String.format("%.2f", produto.getPrecoPorKg())
-                + "Total: R$ " + String.format("%.2f", getValorItem());
-    }*/
 }
 
