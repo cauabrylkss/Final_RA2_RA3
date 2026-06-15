@@ -4,6 +4,7 @@ public abstract class Cliente {
     protected String CNPJ;
     protected String endereco;
     protected double desconto;
+    
     Cliente (String nome, String CNPJ, String endereco){
         this.nome = nome;
         this.CNPJ = CNPJ;
