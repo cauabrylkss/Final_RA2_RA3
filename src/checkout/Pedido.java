@@ -16,11 +16,13 @@ public class Pedido {
         this.quantidade = quantidade;
         this.statusPedido = StatusPedido.PEDIDO;
     }
+    public void setStatus(StatusPedido status)   { this.statusPedido = status; }
 
     public int     getId()      { return id; }
     public String  getCnpjCliente() { return cnpjCliente; }
     public Produto getProduto()     { return produto; }
     public double  getQuantidade()  { return quantidade; }
+    public StatusPedido getStatus()              { return statusPedido; }
 
     public double getValorItem() {
         return produto.getPrecoPorKg() * quantidade;
