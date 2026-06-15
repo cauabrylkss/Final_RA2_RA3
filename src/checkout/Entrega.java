@@ -22,7 +22,6 @@ public class Entrega implements Serializable {
         this.dicionarioPedidos = new HashMap<>();
         this.valorTotal = 0.0;
     }
-
     public Map<Integer, Pedido> getDicionarioPedidos() {
         return this.dicionarioPedidos;
     }
@@ -39,14 +38,20 @@ public class Entrega implements Serializable {
 
         for(Pedido pedido : dicionarioPedidos.values()){
             soma += cliente.aplicarDesconto(pedido.getValorItem());
-            this.valorTotal = soma;
-
         }
-
+        this.valorTotal = soma;
     }
 
     public Cliente getCliente() {return this.cliente;}
     public double getValorTotal(){return this.valorTotal;}
 
-
+ /*   @Override
+    public String toString() {
+        return "Pedido #" + this.pedido.getId() + "CNPJ: "
+                + cliente + cliente.getCliente();
+                + quantidade + " kg"
+                + "Preco/Kg: " + String.format("%.2f", produto.getPrecoPorKg())
+                + "Total: R$ " + String.format("%.2f", getValorItem());
+    }*/
 }
+
