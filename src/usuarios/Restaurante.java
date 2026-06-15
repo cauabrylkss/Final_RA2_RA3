@@ -1,6 +1,9 @@
 package usuarios;
 
-public class Restaurante extends Cliente{
+import java.io.Serializable;
+
+public class Restaurante extends Cliente implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     Restaurante (String nome, String CNPJ, String endereco){
         super(nome, CNPJ, endereco);

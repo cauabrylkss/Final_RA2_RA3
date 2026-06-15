@@ -1,5 +1,9 @@
 package Produtos;
-public class Spaguetti extends Produto{
+
+import java.io.Serializable;
+
+public class Spaguetti extends Produto implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final double MAX_PRODUCAO = 1600.0;
 
 
