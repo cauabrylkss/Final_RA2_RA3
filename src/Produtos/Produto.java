@@ -1,3 +1,4 @@
+package Produtos;
 public abstract class Produto {
     protected double preco_kilograma;
     Produto (double preco_kilograma){

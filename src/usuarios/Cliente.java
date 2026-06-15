@@ -1,3 +1,4 @@
+package usuarios;
 public abstract class Cliente {
     protected String nome;
     protected String CNPJ;

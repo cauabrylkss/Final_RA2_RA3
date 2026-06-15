@@ -1,3 +1,4 @@
+package Produtos;
 public class Talharim extends Produto{
     private int producao_semanal;
     private double contador_producao;
