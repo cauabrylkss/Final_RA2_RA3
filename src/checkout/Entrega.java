@@ -5,19 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Entrega {
-    //parametros clientes (Cliente cliente)
     Cliente cliente;
     Map<Integer,Pedido> dicionarioPedidos;
     protected double valorTotal;
 
-    /*protected String nome;
-    protected String CNPJ;
-    protected String endereco;
-    double desconto;*/
 
-    //___________________
-
-    //LISTA CLIENTE
     public Entrega(Cliente cliente) {
         this.cliente = cliente;
         this.dicionarioPedidos = new HashMap<>();
@@ -41,8 +33,3 @@ public class Entrega {
 
 }
 
-// Onde for chamar esse construtor, deve ser passado os atributos relacionados à classe cliente
-// EX:
-//
-// Cliente cliente1 = new Cliente(cnpj, nome, etc..)
-// Entrega entrega1 = new Entrega(cliente1.cnpj, etc...)

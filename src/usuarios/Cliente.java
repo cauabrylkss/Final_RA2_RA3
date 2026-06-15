@@ -4,27 +4,17 @@ public abstract class Cliente {
     protected String CNPJ;
     protected String endereco;
 
-    protected double desconto;
     
     Cliente (String nome, String CNPJ, String endereco){
         this.nome = nome;
         this.CNPJ = CNPJ;
         this.endereco = endereco;
-        this.desconto = 0;
     }
 
-    Cliente (String nome, String CNPJ, String endereco, double desconto){
-        this.nome = nome;
-        this.CNPJ = CNPJ;
-        this.endereco = endereco;
-        this.desconto = desconto;
-    }
+    public String getNome()     { return nome; }
+    public String getCnpj()     { return CNPJ; }
+    public String getEndereco() { return endereco; }
 
-    public double aplicar_desconto(double valor){
-        //
-        if (this.desconto != 0){
-            return valor - (valor * (this.desconto / 100))
-        }
-        return valor;
-    }
+    public abstract double aplicarDesconto(double valorBruto);
+    public abstract String getTipo();
 }
