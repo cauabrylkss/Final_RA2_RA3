@@ -11,9 +11,9 @@ public class Entrega implements Serializable {
     //versão do Serializable
     private static final long serialVersionUID = 1L;
 
-    Cliente cliente;
-    Supermercado supermercado;
-    Map<Integer,Pedido> dicionarioPedidos;
+    private Cliente cliente;
+    private Supermercado supermercado;
+    private Map<Integer,Pedido> dicionarioPedidos;
     protected double valorTotal;
 
 
@@ -38,17 +38,20 @@ public class Entrega implements Serializable {
 
         for(Pedido pedido : dicionarioPedidos.values()){
             soma += cliente.aplicarDesconto(pedido.getValorItem());
-            this.valorTotal = soma;
-
-            //soma += pedido.getQuantidade() * pedido.getValorItem();
-            //if(this.cliente instanceof Supermercado){soma = soma *0.90}
         }
-
+        this.valorTotal = soma;
     }
 
     public Cliente getCliente() {return this.cliente;}
     public double getValorTotal(){return this.valorTotal;}
 
-
+ /*   @Override
+    public String toString() {
+        return "Pedido #" + this.pedido.getId() + "CNPJ: "
+                + cliente + cliente.getCliente();
+                + quantidade + " kg"
+                + "Preco/Kg: " + String.format("%.2f", produto.getPrecoPorKg())
+                + "Total: R$ " + String.format("%.2f", getValorItem());
+    }*/
 }
 
