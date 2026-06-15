@@ -13,6 +13,6 @@ public class Supermercado extends Cliente {
 
     @Override
     public String getTipo() {
-        return " SUPERMERCADO ";
+        return "SUPERMERCADO";
     }
 }

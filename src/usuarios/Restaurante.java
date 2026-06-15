@@ -13,7 +13,7 @@ public class Restaurante extends Cliente{
 
     @Override
     public String getTipo() {
-        return " RESTAURANTE ";
+        return "RESTAURANTE";
     }
 
 
