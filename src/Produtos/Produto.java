@@ -1,5 +1,10 @@
 package Produtos;
-public abstract class Produto {
+
+import java.io.Serializable;
+
+public abstract class Produto implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     protected double preco_kilograma;
 
     Produto (double preco_kilograma){
