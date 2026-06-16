@@ -17,8 +17,11 @@ import java.util.Optional;
 
 public class LeitorPedidos {
     ArrayList<Cliente> lista_clientes;
-    LeitorPedidos(ArrayList<Cliente> lista_clientes){
+    ArrayList<Pedido> listaPedidos;
+
+    public LeitorPedidos(ArrayList<Cliente> lista_clientes){
         this.lista_clientes = lista_clientes;
+        this.listaPedidos = new ArrayList<>();
     }
 
     public void lerPedido() throws IOException {
@@ -35,7 +38,7 @@ public class LeitorPedidos {
             if (clienteEncontrado.isPresent()){
                 Cliente cliente = clienteEncontrado.get();
                 double quantidade = Double.parseDouble(campos[2]);
-                if (Objects.equals(campos[1], "spagetti")){
+                if (Objects.equals(campos[1], "spaguetti")){
                     produto = new Spaguetti();
                 } else if (Objects.equals(campos[1], "canelone")) {
                     produto = new Canelone();
@@ -43,6 +46,8 @@ public class LeitorPedidos {
                     produto = new Talharim();
                 }
                 Pedido pedido = new Pedido(cliente.getCnpj(), produto, quantidade);
+
+                listaPedidos.add(pedido);
 
                 // AGORA PRECISAMOS INSERIR ESSE PEDIDO NO ARQUIVO QUE O SISTEMA UTILIZARÁ PARA DESENHAR O GRÁFICO COM P2 E DAR CONTINUIDADE AO FLUXO
                 // DE PEDIDO -> FABRICACAO -> ENTREGA. ACHO QUE QUE TODOS OS PEDIDOS DEVEM SER SALVOS EM UMA ARRAYLIST E PASSADOS PARA A CLASSE
@@ -53,5 +58,8 @@ public class LeitorPedidos {
 
 
         }
+    }
+    public ArrayList<Pedido> getListaPedidos(){
+        return listaPedidos;
     }
 }
