@@ -36,7 +36,7 @@ public class LeitorPedidos {
         while ((linha = br.readLine()) != null) {
             String[] campos = linha.split(",");
             if (campos.length < 3) {
-                throw new ArquivoInvalidoException("pedidos_semana1.csv", numeroLinha, "campos insuficientes");
+                throw new ArquivoInvalidoException(caminho, numeroLinha, "campos insuficientes");
             }
             Optional<Cliente> clienteEncontrado = lista_clientes.stream().filter(cliente -> cliente.getCnpj().equals(campos[0])).findFirst();
 
@@ -60,6 +60,9 @@ public class LeitorPedidos {
 
             }
             numeroLinha++;
+        }
+        if (numeroLinha < 9) {
+            throw new ArquivoInvalidoException(caminho, numeroLinha, "linhas insuficientes");
         }
         br.close();
         bw.close();

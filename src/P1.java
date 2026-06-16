@@ -8,6 +8,7 @@ import arquivos.LeitorClientes;
 import arquivos.LeitorPedidos;
 
 import checkout.Pedido;
+import excecoes.ArquivoInvalidoException;
 import usuarios.Cliente;
 
 public class P1{
@@ -36,17 +37,21 @@ public class P1{
         ArrayList<Cliente> clientes = leitorClientes.getLista_clientes();
 
         // coleta os pedidos de cada semana
-        LeitorPedidos lp1 = new LeitorPedidos(clientes, "pedidos_semana1.csv");
-        lp1.lerPedido();
+        try {
+            LeitorPedidos lp1 = new LeitorPedidos(clientes, "pedidos_semana1.csv");
+            lp1.lerPedido();
 
-        LeitorPedidos lp2 = new LeitorPedidos(clientes, "pedidos_semana2.csv");
-        lp2.lerPedido();
+            LeitorPedidos lp2 = new LeitorPedidos(clientes, "pedidos_semana2.csv");
+            lp2.lerPedido();
 
-        LeitorPedidos lp3 = new LeitorPedidos(clientes, "pedidos_semana3.csv");
-        lp3.lerPedido();
+            LeitorPedidos lp3 = new LeitorPedidos(clientes, "pedidos_semana3.csv");
+            lp3.lerPedido();
 
-        LeitorPedidos lp4 = new LeitorPedidos(clientes, "pedidos_semana4.csv");
-        lp4.lerPedido();
+            LeitorPedidos lp4 = new LeitorPedidos(clientes, "pedidos_semana4.csv");
+            lp4.lerPedido();
+        } catch (ArquivoInvalidoException e) {
+            System.out.println("Arquivos de pedidos são inválidos");
+        }
 
 
         ArrayList<ArrayList<Pedido>> pedidosPorSemana = new ArrayList<>();
