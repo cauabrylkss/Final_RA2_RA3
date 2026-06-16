@@ -16,8 +16,8 @@ import java.util.Optional;
 public class LeitorClientes {
     protected ArrayList<Cliente> lista_clientes;
 
-    public void registrarClientes() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("clientes.csv"));
+    public void registrarClientes(String caminho) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(caminho));
         String linha;
 
         Cliente cliente;

@@ -7,10 +7,7 @@ import Produtos.Talharim;
 import checkout.Pedido;
 import usuarios.Cliente;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,15 +15,18 @@ import java.util.Optional;
 public class LeitorPedidos {
     ArrayList<Cliente> lista_clientes;
     ArrayList<Pedido> listaPedidos;
+    String caminho;
 
-    public LeitorPedidos(ArrayList<Cliente> lista_clientes){
+    public LeitorPedidos(ArrayList<Cliente> lista_clientes, String caminho){
         this.lista_clientes = lista_clientes;
         this.listaPedidos = new ArrayList<>();
+        this.caminho = caminho;
     }
 
     public void lerPedido() throws IOException {
 
-        BufferedReader br = new BufferedReader(new FileReader("pedidos.csv"));
+        BufferedReader br = new BufferedReader(new FileReader(caminho));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
         String linha;
 
         Produto produto;
@@ -49,15 +49,14 @@ public class LeitorPedidos {
 
                 listaPedidos.add(pedido);
 
-                // AGORA PRECISAMOS INSERIR ESSE PEDIDO NO ARQUIVO QUE O SISTEMA UTILIZARÁ PARA DESENHAR O GRÁFICO COM P2 E DAR CONTINUIDADE AO FLUXO
-                // DE PEDIDO -> FABRICACAO -> ENTREGA. ACHO QUE QUE TODOS OS PEDIDOS DEVEM SER SALVOS EM UMA ARRAYLIST E PASSADOS PARA A CLASSE
-                // "EscritorFabricacao" À FIM DE GERAR O .BIN QUE O P2 UTILIZARÁ PARA IMPLEMENTAR A INTERFACE GRÁFICA
+                bw.write(pedido.getId() + "," + cliente.getCnpj() + "," + campos[1] + "," + quantidade);
+                bw.newLine();
+                
 
             }
-
-
-
         }
+        br.close();
+        bw.close();
     }
     public ArrayList<Pedido> getListaPedidos(){
         return listaPedidos;

@@ -1,3 +1,5 @@
-cnpj,nome,endereco,tipo
-12345678000199,BomPreco,Rua A 123,supermercado
-98765432000111,Sabor,Av B 456,restaurante
+11222333000181,Supermercado BomPreco,Rua das Flores 100,supermercado
+22333444000192,Supermercado Atacadao,Av Paulista 200,supermercado
+33444555000103,Restaurante Sabor,Rua Italia 300,restaurante
+44555666000114,Restaurante Italiano,Av Brasil 400,restaurante
+55666777000125,Supermercado MercadoBom,Rua do Comercio 500,supermercado
