@@ -43,6 +43,11 @@ public class LeitorPedidos {
                     produto = new Talharim();
                 }
                 Pedido pedido = new Pedido(cliente.getCnpj(), produto, quantidade);
+
+                // AGORA PRECISAMOS INSERIR ESSE PEDIDO NO ARQUIVO QUE O SISTEMA UTILIZARÁ PARA DESENHAR O GRÁFICO COM P2 E DAR CONTINUIDADE AO FLUXO
+                // DE PEDIDO -> FABRICACAO -> ENTREGA. ACHO QUE QUE TODOS OS PEDIDOS DEVEM SER SALVOS EM UMA ARRAYLIST E PASSADOS PARA A CLASSE
+                // "EscritorFabricacao" À FIM DE GERAR O .BIN QUE O P2 UTILIZARÁ PARA IMPLEMENTAR A INTERFACE GRÁFICA
+
             }
 
 
