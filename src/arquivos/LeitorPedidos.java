@@ -5,6 +5,7 @@ import Produtos.Produto;
 import Produtos.Spaguetti;
 import Produtos.Talharim;
 import checkout.Pedido;
+import excecoes.ArquivoInvalidoException;
 import usuarios.Cliente;
 
 import java.io.*;
@@ -23,16 +24,20 @@ public class LeitorPedidos {
         this.caminho = caminho;
     }
 
-    public void lerPedido() throws IOException {
+    public void lerPedido() throws IOException, ArquivoInvalidoException {
 
         BufferedReader br = new BufferedReader(new FileReader(caminho));
         BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
         String linha;
+        int numeroLinha = 0;
 
         Produto produto;
 
         while ((linha = br.readLine()) != null) {
             String[] campos = linha.split(",");
+            if (campos.length < 3) {
+                throw new ArquivoInvalidoException("pedidos_semana1.csv", numeroLinha, "campos insuficientes");
+            }
             Optional<Cliente> clienteEncontrado = lista_clientes.stream().filter(cliente -> cliente.getCnpj().equals(campos[0])).findFirst();
 
             if (clienteEncontrado.isPresent()){
@@ -51,9 +56,10 @@ public class LeitorPedidos {
 
                 bw.write(pedido.getId() + "," + cliente.getCnpj() + "," + campos[1] + "," + quantidade);
                 bw.newLine();
-                
+
 
             }
+            numeroLinha++;
         }
         br.close();
         bw.close();

@@ -1,6 +1,6 @@
 package arquivos;
 
-import Excecoes.ArquivoInvalidoException;
+import excecoes.ArquivoInvalidoException;
 
 interface Exportavel {
     void exportar(String caminho) throws ArquivoInvalidoException;
