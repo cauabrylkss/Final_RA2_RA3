@@ -7,8 +7,8 @@ public class Canelone extends Produto implements Serializable {
 
     private static final double MAX_PRODUCAO = 2000.0;
 
-    Canelone(double preco_kilograma){
-        super(preco_kilograma);
+    public Canelone(){
+        super(45.0);
     }
     @Override
     public double getMaxProducaoSemanal() { return MAX_PRODUCAO; }

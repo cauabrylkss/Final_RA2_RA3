@@ -8,12 +8,14 @@ public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     protected int id;
+    protected int contador_id;
     protected String cnpjCliente;
     private Produto produto;
     private double quantidade;
     protected StatusPedido statusPedido;
 
-    Pedido(String cnpjCliente, Produto produto, double quantidade){
+    public Pedido(String cnpjCliente, Produto produto, double quantidade){
+        this.id = ++contador_id;
         this.cnpjCliente = cnpjCliente;
         this.produto = produto;
         this.quantidade = quantidade;

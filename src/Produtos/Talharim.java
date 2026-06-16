@@ -7,8 +7,8 @@ public class Talharim extends Produto implements Serializable {
 
     private static final double MAX_PRODUCAO = 1000.0;
 
-    Talharim(double preco_kilograma){
-        super(preco_kilograma);
+    public Talharim(){
+        super(16.0);
     }
     @Override
     public double getMaxProducaoSemanal() { return MAX_PRODUCAO; }

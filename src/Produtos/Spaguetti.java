@@ -7,8 +7,8 @@ public class Spaguetti extends Produto implements Serializable {
     private static final double MAX_PRODUCAO = 1600.0;
 
 
-    Spaguetti(double preco_kilograma){
-        super(preco_kilograma);
+    public Spaguetti(){
+        super(12.0);
     }
     @Override
     public double getMaxProducaoSemanal() { return MAX_PRODUCAO; }
