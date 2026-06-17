@@ -13,7 +13,7 @@ import usuarios.Cliente;
 
 public class P1{
     public static void main(String[] args) throws IOException {
-        
+
         // FLUXO
 
         // P1
@@ -35,8 +35,9 @@ public class P1{
         LeitorClientes leitorClientes = new LeitorClientes();
         leitorClientes.registrarClientes("clientes.csv");
         ArrayList<Cliente> clientes = leitorClientes.getLista_clientes();
+        ArrayList<ArrayList<Pedido>> pedidosPorSemana = new ArrayList<>();
 
-        // coleta os pedidos de cada semana
+
         try {
             LeitorPedidos lp1 = new LeitorPedidos(clientes, "pedidos_semana1.csv");
             lp1.lerPedido();
@@ -49,16 +50,16 @@ public class P1{
 
             LeitorPedidos lp4 = new LeitorPedidos(clientes, "pedidos_semana4.csv");
             lp4.lerPedido();
+
+            pedidosPorSemana.add(lp1.getListaPedidos());
+            pedidosPorSemana.add(lp2.getListaPedidos());
+            pedidosPorSemana.add(lp3.getListaPedidos());
+            pedidosPorSemana.add(lp4.getListaPedidos());
         } catch (ArquivoInvalidoException e) {
             System.out.println("Arquivos de pedidos são inválidos");
         }
 
 
-        ArrayList<ArrayList<Pedido>> pedidosPorSemana = new ArrayList<>();
-        pedidosPorSemana.add(lp1.getListaPedidos());
-        pedidosPorSemana.add(lp2.getListaPedidos());
-        pedidosPorSemana.add(lp3.getListaPedidos());
-        pedidosPorSemana.add(lp4.getListaPedidos());
 
 
         // serializa clientes e pedidos juntos

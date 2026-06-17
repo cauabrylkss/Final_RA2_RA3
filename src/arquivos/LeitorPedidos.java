@@ -24,10 +24,14 @@ public class LeitorPedidos {
         this.caminho = caminho;
     }
 
+    public String gerarCaminhoArquivo(){
+        return (String.format("%sEscrita", caminho));
+    }
+
     public void lerPedido() throws IOException, ArquivoInvalidoException {
 
         BufferedReader br = new BufferedReader(new FileReader(caminho));
-        BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(gerarCaminhoArquivo()));
         String linha;
         int numeroLinha = 0;
 
