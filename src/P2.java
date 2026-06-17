@@ -64,7 +64,7 @@ public class P2 {
 
             // ATUALIZAÇÃO DA SEMANA
 
-            for (Entrega e : entregasDaSemana){ // Remove entrega a cada nova semana, porque entrega é o fim do circuito pedido->fabricacao->entrega->null
+            for (Entrega e : entregasDaSemana){ // Remove entrega a cada nova semana, porque entrega é o fim do circuito pedido->fabricacao->entrega
                 entregasDaSemana.remove(e);
             }
 
