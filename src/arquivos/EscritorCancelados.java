@@ -4,11 +4,11 @@ import checkout.Pedido;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 public class EscritorCancelados {
 
-    public void escrever(List<Pedido> pedidosCancelados, String caminhoArquivo, int semana) throws IOException {
+    public void escrever(ArrayList<Pedido> pedidosCancelados, String caminhoArquivo, int semana) throws IOException {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
             bw.write("=== PEDIDOS CANCELADOS - SEMANA " + semana + " ===");

@@ -7,12 +7,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class EscritorFabricacao {
     ArrayList<Pedido> pedidosCancelados;
 
-    public void escrever(List<Pedido> pedidosFabricar, String caminhoArquivo, int semana, ArrayList<Pedido> pedidosCancelados) throws IOException {
+    public void escrever(ArrayList<Pedido> pedidosFabricar, String caminhoArquivo, int semana, ArrayList<Pedido> pedidosCancelados) throws IOException {
         this.pedidosCancelados = pedidosCancelados;
         EscritorCancelados escritorCancelados = new EscritorCancelados();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {

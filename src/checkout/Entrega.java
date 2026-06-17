@@ -17,7 +17,8 @@ public class Entrega implements Serializable {
     protected double valorTotal;
 
 
-    public Entrega(Cliente cliente) {
+    public Entrega(Cliente cliente, Pedido pedido) {
+        this.dicionarioPedidos.put(pedido.getId(), pedido);
         this.cliente = cliente;
         this.dicionarioPedidos = new HashMap<>();
         this.valorTotal = 0.0;

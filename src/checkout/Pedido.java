@@ -1,6 +1,7 @@
 package checkout;
 
 import Produtos.Produto;
+import usuarios.Cliente;
 
 import java.io.Serializable;
 
@@ -12,11 +13,13 @@ public class Pedido implements Serializable {
     protected String cnpjCliente;
     private Produto produto;
     private double quantidade;
+    private Cliente cliente;
     protected StatusPedido statusPedido;
 
-    public Pedido(String cnpjCliente, Produto produto, double quantidade){
+    public Pedido(Cliente cliente, Produto produto, double quantidade){
         this.id = ++contador_id;
-        this.cnpjCliente = cnpjCliente;
+        this.cliente = cliente;
+        this.cnpjCliente = cliente.getCnpj();
         this.produto = produto;
         this.quantidade = quantidade;
         this.statusPedido = StatusPedido.PEDIDO;
@@ -32,6 +35,8 @@ public class Pedido implements Serializable {
     public double getValorItem() {
         return produto.getPrecoPorKg() * quantidade;
     }
+
+    public Cliente getCliente(){return this.cliente;}
 
     @Override
     public String toString() {

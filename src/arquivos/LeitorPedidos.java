@@ -54,7 +54,7 @@ public class LeitorPedidos implements Exportavel{
                 }else {
                     produto = new Talharim();
                 }
-                Pedido pedido = new Pedido(cliente.getCnpj(), produto, quantidade);
+                Pedido pedido = new Pedido(cliente, produto, quantidade);
 
                 listaPedidos.add(pedido);
 
