@@ -18,7 +18,7 @@ public class P1{
 
         // P1
         //├── LeitorClientes   → clientes.csv
-        //├── LeitorPedidos    → pedidos_semana1.csv.csv (mín. 10 pedidos) 4 chamadas em p1 assim: new LeitorPedidos(clientes, "pedidos_semana1.csv.csv", "registros_semana1.csv").exportar();
+        //├── LeitorPedidos    → pedidos_semana1.csv.csv (mín. 10 pedidos) 4 chamadas em p1 assim: new LeitorPedidos(clientes, "pedidos_semana1.csv", "registros_semana1.csv").exportar();
         //├── LeitorPedidos    → pedidos_semana2.csv.csv (mín. 10 pedidos)
         //├── LeitorPedidos    → pedidos_semana3.csv.csv (mín. 10 pedidos)
         //├── LeitorPedidos    → pedidos_semana4.csv.csv (mín. 10 pedidos)

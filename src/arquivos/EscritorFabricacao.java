@@ -1,6 +1,7 @@
 package arquivos;
 
 import checkout.Pedido;
+import excecoes.CapacidadeExcedidaException;
 import utilitarios.GeradorCaminhos;
 
 import java.io.BufferedWriter;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class EscritorFabricacao {
     ArrayList<Pedido> pedidosCancelados;
 
-    public void escrever(ArrayList<Pedido> pedidosFabricar, String caminhoArquivo, int semana, ArrayList<Pedido> pedidosCancelados) throws IOException {
+    public void escrever(ArrayList<Pedido> pedidosFabricar, String caminhoArquivo, int semana, ArrayList<Pedido> pedidosCancelados) throws IOException, CapacidadeExcedidaException {
         this.pedidosCancelados = pedidosCancelados;
         EscritorCancelados escritorCancelados = new EscritorCancelados();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
@@ -27,28 +28,49 @@ public class EscritorFabricacao {
 
                 String forma = p.getProduto().getForma().toLowerCase();
                 if (forma.equals("spaguetti")) {
-                    if (totalSpaguetti + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()){
-                        pedidosCancelados.add(p);
-                        escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
-                    }else {
-                        totalSpaguetti += p.getQuantidade();
+                    try {
+                        if (totalSpaguetti + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
+                            pedidosCancelados.add(p);
+                            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
+
+                            throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalSpaguetti,
+                                    p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalSpaguetti);
+                        } else {
+                            totalSpaguetti += p.getQuantidade();
+                        }
+                    } catch (CapacidadeExcedidaException e) {
+                        System.out.println(e.getMessage());
                     }
                 }
                 else if (forma.equals("canelone")) {
-                    if (totalCanelone + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()){
-                        pedidosCancelados.add(p);
-                        escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
-                    }else {
-                        totalCanelone += p.getQuantidade();
+                    try {
+                        if (totalCanelone + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
+                            pedidosCancelados.add(p);
+                            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
+
+                            throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalCanelone,
+                                    p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalCanelone);
+                        } else {
+                            totalCanelone += p.getQuantidade();
+                        }
+                    } catch (CapacidadeExcedidaException e) {
+                        System.out.println(e.getMessage());
                     }
                 }
                 else {
-                    if (totalTalharim + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()){
-                        pedidosCancelados.add(p);
-                        escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
-                    } else {
-                        totalTalharim += p.getQuantidade();
+                    try {
+                        if (totalTalharim + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
+                            pedidosCancelados.add(p);
+                            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
 
+                            throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalTalharim,
+                                    p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalTalharim);
+                        } else {
+                            totalTalharim += p.getQuantidade();
+
+                        }
+                    } catch (CapacidadeExcedidaException e) {
+                        System.out.println(e.getMessage());
                     }
                 }
 

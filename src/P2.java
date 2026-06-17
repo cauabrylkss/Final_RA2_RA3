@@ -1,5 +1,6 @@
 import checkout.Pedido;
 import checkout.Entrega;
+import excecoes.CapacidadeExcedidaException;
 import usuarios.Cliente;
 import arquivos.EscritorCancelados;
 import arquivos.EscritorFabricacao;
@@ -30,7 +31,6 @@ public class P2 {
             return;
         }
 
-        EscritorCancelados escritorCancelados = new EscritorCancelados();
         EscritorFabricacao escritorFabricacao = new EscritorFabricacao();
         EscritorEntregas escritorEntregas = new EscritorEntregas();
 
@@ -53,7 +53,7 @@ public class P2 {
                 if (numeroSemana >= 3) {
                     escritorEntregas.escrever(entregasDaSemana, GeradorCaminhos.gerarCaminho("log_entregas.txt", numeroSemana), numeroSemana);
                 }
-            } catch (IOException e) {
+            } catch (IOException | CapacidadeExcedidaException e) {
                 System.out.println("Erro ao escrever log da semana " + numeroSemana + ": " + e.getMessage());
             }
 
