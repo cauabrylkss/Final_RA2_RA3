@@ -5,15 +5,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-//entrega pedido-> logica e usuario
 
 public class Entrega implements Serializable {
-    //versão do Serializable
     private static final long serialVersionUID = 1L;
 
     Cliente cliente;
     Supermercado supermercado;
-    Map<Integer,Pedido> dicionarioPedidos;
+    Map<Integer,Pedido> dicionarioPedidos = new HashMap<>();
     protected double valorTotal;
 
 
@@ -26,8 +24,6 @@ public class Entrega implements Serializable {
     public Map<Integer, Pedido> getDicionarioPedidos() {
         return this.dicionarioPedidos;
     }
-
-    //[Numero do pedido,forma do macarrao,quantidade(kg),preco do kilo, valor do item]
 
     //add pedido no checkout
     public void adicionarPedido(Pedido novoPedido) {

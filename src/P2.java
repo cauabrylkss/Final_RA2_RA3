@@ -64,20 +64,16 @@ public class P2 {
 
             // ATUALIZAÇÃO DA SEMANA
 
-            for (Entrega e : entregasDaSemana){ // Remove entrega a cada nova semana, porque entrega é o fim do circuito pedido->fabricacao->entrega
-                entregasDaSemana.remove(e);
-            }
+            entregasDaSemana.clear();
 
             for (Pedido p : pedidosFabricar){
                 Entrega entregaPedido = new Entrega(p.getCliente(), p);
                 entregasDaSemana.add(entregaPedido);
-                pedidosFabricar.remove(p);
             }
+            pedidosFabricar.clear();
 
-            for (Pedido p : pedidosDestaSemana){
-                pedidosFabricar.add(p);
-                pedidosDestaSemana.remove(p);
-            }
+            pedidosFabricar.addAll(pedidosDestaSemana);
+            pedidosDestaSemana.clear();
 
         }
     }
