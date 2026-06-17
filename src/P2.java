@@ -4,18 +4,15 @@ import usuarios.Cliente;
 import arquivos.EscritorCancelados;
 import arquivos.EscritorFabricacao;
 import arquivos.EscritorEntregas;
+import utilitarios.GeradorCaminhos;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class P2 {
-
-    public static String gerarCaminho(String caminhoOriginal, int numeroSemana){
-        return caminhoOriginal.replace(".txt", String.format("Semana%d", numeroSemana));
-    }
 
     public static void main(String[] args) {
 
@@ -40,11 +37,11 @@ public class P2 {
         // Lógica de simulação das semanas
         for (int i = 0; i < pedidosPorSemana.size(); i++) {
             int numeroSemana = i + 1;
-            List<Pedido> pedidosDestaSemana = pedidosPorSemana.get(i);
+            ArrayList<Pedido> pedidosDestaSemana = pedidosPorSemana.get(i);
 
-            List<Pedido> pedidosFabricar = new ArrayList<>();
-            List<Pedido> pedidosCancelados = new ArrayList<>();
-            List<Entrega> entregasDaSemana = new ArrayList<>();
+            ArrayList<Pedido> pedidosFabricar = new ArrayList<>();
+            ArrayList<Pedido> pedidosCancelados = new ArrayList<>();
+            ArrayList<Entrega> entregasDaSemana = new ArrayList<>();
 
             /* * AQUI ENTRA A SUA LÓGICA DE NEGÓCIO:
              * - Somar os kg de Spaguetti, Canelone e Talharim.
@@ -52,15 +49,17 @@ public class P2 {
              * - Se estiver dentro do limite, joga o Pedido na lista 'pedidosFabricar'.
              * - Agrupar os pedidos aprovados na classe Entrega (1 entrega por Cliente).
              */
+            for (Pedido p : pedidosDestaSemana){
+                pedidosFabricar.add(p);
+            }
+
 
 
             try {
-                escritorFabricacao.escrever(pedidosFabricar, gerarCaminho("log_fabricacao.txt", numeroSemana), numeroSemana);
-                escritorCancelados.escrever(pedidosCancelados, gerarCaminho("log_cancelados.txt", numeroSemana), numeroSemana);
-
+                escritorFabricacao.escrever(pedidosFabricar, GeradorCaminhos.gerarCaminho("log_fabricacao.txt", numeroSemana), numeroSemana, pedidosCancelados);
 
                 if (numeroSemana >= 3) {
-                    escritorEntregas.escrever(entregasDaSemana, gerarCaminho("log_entregas.txt", numeroSemana), numeroSemana);
+                    escritorEntregas.escrever(entregasDaSemana, GeradorCaminhos.gerarCaminho("log_entregas.txt", numeroSemana), numeroSemana);
                 }
             } catch (IOException e) {
                 System.out.println("Erro ao escrever log da semana " + numeroSemana + ": " + e.getMessage());
