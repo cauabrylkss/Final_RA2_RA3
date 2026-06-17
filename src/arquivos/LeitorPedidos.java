@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
-public class LeitorPedidos {
+public class LeitorPedidos implements Exportavel{
     ArrayList<Cliente> lista_clientes;
     ArrayList<Pedido> listaPedidos;
     String caminho;
@@ -24,11 +24,11 @@ public class LeitorPedidos {
         this.caminho = caminho;
     }
 
-    public String gerarCaminhoArquivo(){
+    private String gerarCaminhoArquivo(){
         return this.caminho.replace(".csv", "Escrita.csv");
     }
 
-    public void lerPedido() throws IOException, ArquivoInvalidoException {
+    public void exportar() throws IOException, ArquivoInvalidoException {
 
         BufferedReader br = new BufferedReader(new FileReader(caminho));
         BufferedWriter bw = new BufferedWriter(new FileWriter(gerarCaminhoArquivo()));

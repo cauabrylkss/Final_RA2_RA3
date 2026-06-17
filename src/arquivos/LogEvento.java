@@ -12,14 +12,14 @@ public class LogEvento implements Serializable {
     private final int semana;
     private final String descricao;
 
-    public LogEvento(TipoEvento tipo, int semana, String descricao) {
+    protected LogEvento(TipoEvento tipo, int semana, String descricao) {
         this.timestamp = LocalDateTime.now();
         this.tipo = tipo;
         this.semana = semana;
         this.descricao = descricao;
     }
 
-    public String toCSV() {
+    protected String toCSV() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         return timestamp.format(fmt) + "," + tipo + ",Semana " + semana + "," + descricao;
     }

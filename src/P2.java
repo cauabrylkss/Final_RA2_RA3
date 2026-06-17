@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class P2 {
+
+    public static String gerarCaminho(String caminhoOriginal, int numeroSemana){
+        return caminhoOriginal.replace(".txt", String.format("Semana%d", numeroSemana));
+    }
+
     public static void main(String[] args) {
 
         ArrayList<Cliente> clientes = null;
@@ -37,7 +42,6 @@ public class P2 {
             int numeroSemana = i + 1;
             List<Pedido> pedidosDestaSemana = pedidosPorSemana.get(i);
 
-            // Listas auxiliares para separar o que acontece na semana
             List<Pedido> pedidosFabricar = new ArrayList<>();
             List<Pedido> pedidosCancelados = new ArrayList<>();
             List<Entrega> entregasDaSemana = new ArrayList<>();
@@ -51,12 +55,12 @@ public class P2 {
 
 
             try {
-                escritorFabricacao.escrever(pedidosFabricar, "log_fabricacao.txt", numeroSemana);
-                escritorCancelados.escrever(pedidosCancelados, "log_cancelados.txt", numeroSemana);
+                escritorFabricacao.escrever(pedidosFabricar, gerarCaminho("log_fabricacao.txt", numeroSemana), numeroSemana);
+                escritorCancelados.escrever(pedidosCancelados, gerarCaminho("log_cancelados.txt", numeroSemana), numeroSemana);
 
 
                 if (numeroSemana >= 3) {
-                    escritorEntregas.escrever(entregasDaSemana, "log_entregas.txt", numeroSemana);
+                    escritorEntregas.escrever(entregasDaSemana, gerarCaminho("log_entregas.txt", numeroSemana), numeroSemana);
                 }
             } catch (IOException e) {
                 System.out.println("Erro ao escrever log da semana " + numeroSemana + ": " + e.getMessage());

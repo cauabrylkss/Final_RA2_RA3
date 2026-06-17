@@ -18,7 +18,7 @@ public class P1{
 
         // P1
         //├── LeitorClientes   → clientes.csv
-        //├── LeitorPedidos    → pedidos_semana1.csv.csv (mín. 10 pedidos) 4 chamadas em p1 assim: new LeitorPedidos(clientes, "pedidos_semana1.csv.csv", "registros_semana1.csv").lerPedido();
+        //├── LeitorPedidos    → pedidos_semana1.csv.csv (mín. 10 pedidos) 4 chamadas em p1 assim: new LeitorPedidos(clientes, "pedidos_semana1.csv.csv", "registros_semana1.csv").exportar();
         //├── LeitorPedidos    → pedidos_semana2.csv.csv (mín. 10 pedidos)
         //├── LeitorPedidos    → pedidos_semana3.csv.csv (mín. 10 pedidos)
         //├── LeitorPedidos    → pedidos_semana4.csv.csv (mín. 10 pedidos)
@@ -39,16 +39,16 @@ public class P1{
 
         try {
             LeitorPedidos lp1 = new LeitorPedidos(clientes, "src/pedidos_semana1.csv");
-            lp1.lerPedido();
+            lp1.exportar();
 
             LeitorPedidos lp2 = new LeitorPedidos(clientes, "src/pedidos_semana2.csv");
-            lp2.lerPedido();
+            lp2.exportar();
 
             LeitorPedidos lp3 = new LeitorPedidos(clientes, "src/pedidos_semana3.csv");
-            lp3.lerPedido();
+            lp3.exportar();
 
             LeitorPedidos lp4 = new LeitorPedidos(clientes, "src/pedidos_semana4.csv");
-            lp4.lerPedido();
+            lp4.exportar();
 
             pedidosPorSemana.add(lp1.getListaPedidos());
             pedidosPorSemana.add(lp2.getListaPedidos());
