@@ -14,7 +14,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LeitorClientes {
-    protected ArrayList<Cliente> lista_clientes;
+    protected ArrayList<Cliente> lista_clientes = new ArrayList<>();
+
+    public LeitorClientes(String caminho) throws IOException {
+        registrarClientes(caminho);
+    }
 
     public void registrarClientes(String caminho) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(caminho));
@@ -30,7 +34,7 @@ public class LeitorClientes {
             } else {
                 cliente = new Supermercado(campos[1], campos[0], campos[2]);
             }
-            lista_clientes.add(cliente);
+            this.lista_clientes.add(cliente);
 
         }
     }

@@ -25,7 +25,7 @@ public class LeitorPedidos {
     }
 
     public String gerarCaminhoArquivo(){
-        return (String.format("%sEscrita", caminho));
+        return this.caminho.replace(".csv", "Escrita.csv");
     }
 
     public void lerPedido() throws IOException, ArquivoInvalidoException {
