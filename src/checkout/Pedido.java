@@ -9,7 +9,7 @@ public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     protected int id;
-    protected int contador_id;
+    protected static int contador_id = 0;
     protected String cnpjCliente;
     private Produto produto;
     private double quantidade;

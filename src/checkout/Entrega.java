@@ -10,6 +10,8 @@ public class Entrega implements Serializable {
     private static final long serialVersionUID = 1L;
 
     Cliente cliente;
+    private int id;
+    protected static int contador_id = 0;
     Supermercado supermercado;
     Map<Integer,Pedido> dicionarioPedidos = new HashMap<>();
     protected double valorTotal;
@@ -17,10 +19,16 @@ public class Entrega implements Serializable {
 
     public Entrega(Cliente cliente, Pedido pedido) {
         this.dicionarioPedidos.put(pedido.getId(), pedido);
+        this.id = ++contador_id;
         this.cliente = cliente;
         this.dicionarioPedidos = new HashMap<>();
         this.valorTotal = 0.0;
     }
+
+    public int getId() {
+        return id;
+    }
+
     public Map<Integer, Pedido> getDicionarioPedidos() {
         return this.dicionarioPedidos;
     }

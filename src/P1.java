@@ -54,6 +54,8 @@ public class P1{
             pedidosPorSemana.add(lp2.getListaPedidos());
             pedidosPorSemana.add(lp3.getListaPedidos());
             pedidosPorSemana.add(lp4.getListaPedidos());
+
+
         } catch (ArquivoInvalidoException e) {
             System.out.println("Arquivos de pedidos são inválidos");
         }

@@ -1,16 +1,19 @@
 import checkout.Pedido;
 import checkout.Entrega;
 import excecoes.CapacidadeExcedidaException;
+import interfaceGrafica.PainelPipeline;
 import usuarios.Cliente;
 import arquivos.EscritorCancelados;
 import arquivos.EscritorFabricacao;
 import arquivos.EscritorEntregas;
 import utilitarios.GeradorCaminhos;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class P2 {
@@ -37,13 +40,27 @@ public class P2 {
         ArrayList<Pedido> pedidosFabricar = new ArrayList<>();
         ArrayList<Pedido> pedidosCancelados = new ArrayList<>();
         ArrayList<Entrega> entregasDaSemana = new ArrayList<>();
+        ArrayList<Pedido> pedidosEntregues = new ArrayList<>();
+
+        // INICIALIZAÇÃO DA INTERFACE GRÁFICA
+        PainelPipeline painel = new PainelPipeline();
+        JScrollPane scroll   = new JScrollPane(painel);
+
+        scroll.getHorizontalScrollBar().setUnitIncrement(16);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        // Cria e exibe a janela
+        JFrame frame = new JFrame("Pipeline de Pedidos");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(scroll);
+        frame.setSize(1050, 420);
+        frame.setLocationRelativeTo(null); // centraliza na tela
+        frame.setVisible(true);
 
         // Lógica de simulação das semanas
         for (int i = 0; i < pedidosPorSemana.size(); i++) {
             int numeroSemana = i + 1;
             ArrayList<Pedido> pedidosDestaSemana = pedidosPorSemana.get(i);
-
-
 
 
 
@@ -58,6 +75,40 @@ public class P2 {
             }
 
             // INTERFACE GRÁFICA
+            List<String> idPedidosFabricar = new ArrayList<>();
+            List<String> idPedidosFeitos = new ArrayList<>();
+            List<String> idEntregas = new ArrayList<>();
+            for (Pedido p : pedidosDestaSemana){
+                idPedidosFeitos.add(String.valueOf(p.getId()));
+            }
+            for (Pedido p : pedidosFabricar){
+                idPedidosFabricar.add(String.valueOf(p.getId()));
+            }
+
+            for (Pedido p : pedidosEntregues){
+                idEntregas.add(String.valueOf(p.getId()));
+            }
+
+            for (Entrega e : entregasDaSemana) {
+                // Itera individualmente sobre cada item dentro da entrega
+                for (Object chave : e.getDicionarioPedidos().keySet()) {
+
+                    // Verifica se a chave do dicionário é o objeto Pedido
+                    if (chave instanceof Pedido) {
+                        idEntregas.add(String.valueOf(((Pedido) chave).getId()));
+                    }
+                    // Caso a chave do dicionário já seja diretamente o ID (Integer, String, etc.)
+                    else {
+                        idEntregas.add(String.valueOf(chave));
+                    }
+                }
+            }
+            System.out.println("=== Semana " + numeroSemana + " ===");
+            System.out.println("P: " + idPedidosFeitos);
+            System.out.println("F: " + idPedidosFabricar);
+            System.out.println("E: " + idEntregas);
+
+            painel.addWeekData(numeroSemana, idPedidosFeitos, idPedidosFabricar, idEntregas);
 
             // FIM INTERFACE
 
@@ -65,10 +116,12 @@ public class P2 {
             // ATUALIZAÇÃO DA SEMANA
 
             entregasDaSemana.clear();
+            pedidosEntregues.clear();
 
             for (Pedido p : pedidosFabricar){
                 Entrega entregaPedido = new Entrega(p.getCliente(), p);
                 entregasDaSemana.add(entregaPedido);
+                pedidosEntregues.add(p);
             }
             pedidosFabricar.clear();
 
