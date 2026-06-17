@@ -90,23 +90,19 @@ public class P2 {
             }
 
             for (Entrega e : entregasDaSemana) {
-                // Itera individualmente sobre cada item dentro da entrega
+
                 for (Object chave : e.getDicionarioPedidos().keySet()) {
 
-                    // Verifica se a chave do dicionário é o objeto Pedido
+
                     if (chave instanceof Pedido) {
                         idEntregas.add(String.valueOf(((Pedido) chave).getId()));
                     }
-                    // Caso a chave do dicionário já seja diretamente o ID (Integer, String, etc.)
+
                     else {
                         idEntregas.add(String.valueOf(chave));
                     }
                 }
             }
-            System.out.println("=== Semana " + numeroSemana + " ===");
-            System.out.println("P: " + idPedidosFeitos);
-            System.out.println("F: " + idPedidosFabricar);
-            System.out.println("E: " + idEntregas);
 
             painel.addWeekData(numeroSemana, idPedidosFeitos, idPedidosFabricar, idEntregas);
 
