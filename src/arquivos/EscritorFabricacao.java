@@ -81,11 +81,11 @@ public class EscritorFabricacao {
 
             bw.write("--- RESUMO DA PRODUÇÃO ---");
             bw.newLine();
-            bw.write("Total Spaguetti: " + totalSpaguetti + " kg / 2000.0 kg");
+            bw.write("Total Spaguetti: " + totalSpaguetti + " kg / " + Produtos.Spaguetti.MAX_PRODUCAO + " kg");
             bw.newLine();
-            bw.write("Total Canelone: " + totalCanelone + " kg / 1600.0 kg");
+            bw.write("Total Canelone: " + totalCanelone + " kg / " + Produtos.Canelone.MAX_PRODUCAO + " kg");
             bw.newLine();
-            bw.write("Total Talharim: " + totalTalharim + " kg");
+            bw.write("Total Talharim: " + totalTalharim + " kg / " + Produtos.Talharim.MAX_PRODUCAO + " kg");
             bw.newLine();
             bw.newLine();
         }

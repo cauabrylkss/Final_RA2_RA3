@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Canelone extends Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final double MAX_PRODUCAO = 2000.0;
+    public static final double MAX_PRODUCAO = 2000.0;
 
     public Canelone(){
         super(45.0);
