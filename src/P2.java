@@ -123,6 +123,7 @@ public class P2 {
 
             pedidosFabricar.addAll(pedidosDestaSemana);
             pedidosDestaSemana.clear();
+            pedidosCancelados.clear();
 
         }
     }

@@ -15,7 +15,6 @@ public class EscritorFabricacao {
 
     public void escrever(ArrayList<Pedido> pedidosFabricar, String caminhoArquivo, int semana, ArrayList<Pedido> pedidosCancelados) throws IOException, CapacidadeExcedidaException {
         this.pedidosCancelados = pedidosCancelados;
-        EscritorCancelados escritorCancelados = new EscritorCancelados();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
             bw.write("=== PROGRAMAÇÃO DE FABRICAÇÃO - SEMANA " + semana + " ===");
             bw.newLine();
@@ -31,7 +30,6 @@ public class EscritorFabricacao {
                     try {
                         if (totalSpaguetti + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
                             pedidosCancelados.add(p);
-                            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
 
                             throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalSpaguetti,
                                     p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalSpaguetti);
@@ -46,7 +44,6 @@ public class EscritorFabricacao {
                     try {
                         if (totalCanelone + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
                             pedidosCancelados.add(p);
-                            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
 
                             throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalCanelone,
                                     p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalCanelone);
@@ -61,7 +58,6 @@ public class EscritorFabricacao {
                     try {
                         if (totalTalharim + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
                             pedidosCancelados.add(p);
-                            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
 
                             throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalTalharim,
                                     p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalTalharim);
@@ -76,7 +72,6 @@ public class EscritorFabricacao {
 
                 if (totalCanelone + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()){
                     pedidosCancelados.add(p);
-                    escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
                 }
 
                 // Registro individual para fabricação
@@ -93,6 +88,10 @@ public class EscritorFabricacao {
             bw.write("Total Talharim: " + totalTalharim + " kg");
             bw.newLine();
             bw.newLine();
+        }
+        if (!pedidosCancelados.isEmpty()) {
+            EscritorCancelados escritorCancelados = new EscritorCancelados();
+            escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);
         }
     }
 }
