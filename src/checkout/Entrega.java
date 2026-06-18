@@ -37,7 +37,7 @@ public class Entrega implements Serializable {
     }
 
     // Calcula o valor e aplica o desconto caso o cliente tenha desconto
-    public double calcular_valor_total(){
+    private double calcular_valor_total(){
         double soma =0.0;
 
         for(Pedido pedido : dicionarioPedidos.values()){

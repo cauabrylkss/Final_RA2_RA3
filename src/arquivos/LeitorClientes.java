@@ -20,7 +20,7 @@ public class LeitorClientes {
         registrarClientes(caminho);
     }
 
-    public void registrarClientes(String caminho) throws IOException {
+    private void registrarClientes(String caminho) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(caminho));
         String linha;
 
