@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LeitorClientes {
-    protected ArrayList<Cliente> lista_clientes = new ArrayList<>();
+    private final ArrayList<Cliente> lista_clientes = new ArrayList<>();
 
     public LeitorClientes(String caminho) throws IOException {
         registrarClientes(caminho);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 public class EscritorFabricacao {
-    ArrayList<Pedido> pedidosCancelados;
+    public ArrayList<Pedido> pedidosCancelados;
 
     public void escrever(ArrayList<Pedido> pedidosFabricar, String caminhoArquivo, int semana, ArrayList<Pedido> pedidosCancelados) throws IOException, CapacidadeExcedidaException {
         this.pedidosCancelados = pedidosCancelados;

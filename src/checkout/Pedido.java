@@ -10,9 +10,9 @@ public class Pedido implements Serializable {
     // Será usada na serialização, todas as classes tem
     private static final long serialVersionUID = 1L;
 
-    protected int id;
-    protected static int contador_id = 0;
-    protected String cnpjCliente;
+    private int id;
+    private static int contador_id = 0;
+    private String cnpjCliente;
     private Produto produto;
     private double quantidade;
     private Cliente cliente;

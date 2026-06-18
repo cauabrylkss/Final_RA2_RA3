@@ -12,10 +12,10 @@ public class Entrega implements Serializable {
 
     Cliente cliente;
     private int id;
-    protected static int contador_id = 0;
+    private static int contador_id = 0;
     // Parte da classe que garante que uma entrega de um mesmo cliente possa receber mais de um pedido, guarda o id do pedido e o objeto do pedido
     Map<Integer,Pedido> dicionarioPedidos = new HashMap<>();
-    protected double valorTotal;
+    private double valorTotal;
 
 
     public Entrega(Cliente cliente, Pedido pedido) {

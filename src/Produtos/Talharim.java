@@ -3,6 +3,7 @@ package Produtos;
 import java.io.Serializable;
 
 public class Talharim extends Produto implements Serializable {
+    // Será usada na serialização, todas as classes tem
     private static final long serialVersionUID = 1L;
 
     public static final double MAX_PRODUCAO = 1000.0;

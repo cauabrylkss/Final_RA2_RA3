@@ -14,9 +14,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LeitorPedidos implements Exportavel{
-    ArrayList<Cliente> lista_clientes;
-    ArrayList<Pedido> listaPedidos;
-    String caminho;
+    private final ArrayList<Cliente> lista_clientes;
+    private final ArrayList<Pedido> listaPedidos;
+    private final String caminho;
 
     public LeitorPedidos(ArrayList<Cliente> lista_clientes, String caminho){
         this.lista_clientes = lista_clientes;

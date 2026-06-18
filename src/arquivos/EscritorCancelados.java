@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class EscritorCancelados {
 
-    public void escrever(ArrayList<Pedido> pedidosCancelados, String caminhoArquivo, int semana) throws IOException {
+    protected void escrever(ArrayList<Pedido> pedidosCancelados, String caminhoArquivo, int semana) throws IOException {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
             bw.write("=== PEDIDOS CANCELADOS - SEMANA " + semana + " ===");
