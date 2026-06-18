@@ -24,6 +24,7 @@ public class LeitorPedidos implements Exportavel{
         this.caminho = caminho;
     }
 
+    // gera caminhos para todos os arquivos adicionados
     private String gerarCaminhoArquivo(){
         return this.caminho.replace(".csv", "Escrita.csv");
     }
@@ -37,16 +38,27 @@ public class LeitorPedidos implements Exportavel{
 
         Produto produto;
 
+        // lê linha por linha
         while ((linha = br.readLine()) != null) {
             String[] campos = linha.split(",");
+
+            // verificação de tamanho minimo de arquivo
             if (campos.length < 3) {
+
+                // throw de exception autoral
                 throw new ArquivoInvalidoException(caminho, numeroLinha, "campos insuficientes");
             }
+
+            // Tenta encontrar o cliente dentro da lista de clientes com base no cnpj dele e depois pega o primeiro
             Optional<Cliente> clienteEncontrado = lista_clientes.stream().filter(cliente -> cliente.getCnpj().equals(campos[0])).findFirst();
 
+
+            // caso exista
             if (clienteEncontrado.isPresent()){
                 Cliente cliente = clienteEncontrado.get();
                 double quantidade = Double.parseDouble(campos[2]);
+
+                // cria os objetos de produto
                 if (Objects.equals(campos[1], "spaguetti")){
                     produto = new Spaguetti();
                 } else if (Objects.equals(campos[1], "canelone")) {
@@ -58,6 +70,7 @@ public class LeitorPedidos implements Exportavel{
 
                 listaPedidos.add(pedido);
 
+                // escreve os pedidos na lista
                 bw.write(pedido.getId() + "," + cliente.getCnpj() + "," + campos[1] + "," + quantidade);
                 bw.newLine();
 
@@ -65,12 +78,15 @@ public class LeitorPedidos implements Exportavel{
             }
             numeroLinha++;
         }
+        // verifica se tudo correu como planejado, escrevendo as 10 linhas de pedido
         if (numeroLinha < 9) {
             throw new ArquivoInvalidoException(caminho, numeroLinha, "linhas insuficientes");
         }
         br.close();
         bw.close();
     }
+
+    // getter
     public ArrayList<Pedido> getListaPedidos(){
         return listaPedidos;
     }

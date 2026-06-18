@@ -3,6 +3,7 @@ package usuarios;
 import java.io.Serializable;
 
 public abstract class Cliente implements Serializable {
+    // Será usada na serialização, todas as classes tem
     private static final long serialVersionUID = 1L;
 
     protected String nome;
@@ -16,13 +17,13 @@ public abstract class Cliente implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getNome()     { return nome; }
     public String getCnpj()     { return CNPJ; }
-    public String getEndereco() { return endereco; }
 
+    // metodos abstratos
     public abstract double aplicarDesconto(double valorBruto);
     public abstract String getTipo();
 
+    // Utilizado para criacao de Logs com atributos de todas as classes, sem ter que dar um get em cada elemento por vez dentro das classes criadoras de logs
     @Override
     public String toString() {
         return getTipo() + ":" + nome + " | CNPJ: " + CNPJ + " | Endereço: " + endereco;

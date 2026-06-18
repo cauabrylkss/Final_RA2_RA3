@@ -10,9 +10,10 @@ public class Canelone extends Produto implements Serializable {
     public Canelone(){
         super(45.0);
     }
+
+    // sobreescrita dos métodos abstratos
     @Override
     public double getMaxProducaoSemanal() { return MAX_PRODUCAO; }
-
     @Override
     public String getForma() { return "CANELONE"; }
 

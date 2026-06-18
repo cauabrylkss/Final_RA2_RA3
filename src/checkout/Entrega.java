@@ -7,12 +7,13 @@ import java.util.Map;
 
 
 public class Entrega implements Serializable {
+    // Será usada na serialização, todas as classes tem
     private static final long serialVersionUID = 1L;
 
     Cliente cliente;
     private int id;
     protected static int contador_id = 0;
-    Supermercado supermercado;
+    // Parte da classe que garante que uma entrega de um mesmo cliente possa receber mais de um pedido, guarda o id do pedido e o objeto do pedido
     Map<Integer,Pedido> dicionarioPedidos = new HashMap<>();
     protected double valorTotal;
 
@@ -24,10 +25,8 @@ public class Entrega implements Serializable {
         this.valorTotal = 0.0;
     }
 
-    public int getId() {
-        return id;
-    }
-
+    //getters (getId() sem uso por enquanto, manter mesmo assim)
+    public int getId() {return id;}
     public Map<Integer, Pedido> getDicionarioPedidos() {
         return this.dicionarioPedidos;
     }
@@ -37,6 +36,7 @@ public class Entrega implements Serializable {
         this.dicionarioPedidos.put(novoPedido.getId(), novoPedido);
     }
 
+    // Calcula o valor e aplica o desconto caso o cliente tenha desconto
     public double calcular_valor_total(){
         double soma =0.0;
 
@@ -46,10 +46,11 @@ public class Entrega implements Serializable {
         this.valorTotal = soma;
         return soma;
     }
-
+    // getters úteis, sem uso, manter mesmo assim para crescimento futuro
     public Cliente getCliente() {return this.cliente;}
     public double getValorTotal(){return this.valorTotal;}
 
+    // Utilizado para criacao de Logs com atributos de todas as classes, sem ter que dar um get em cada elemento por vez dentro das classes criadoras de logs
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

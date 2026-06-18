@@ -19,6 +19,8 @@ public class EscritorLog {
     }
 
     public void escrever() throws IOException {
+
+        // escreve o evento com todos os metadados necessários
         BufferedWriter bw = new BufferedWriter(new FileWriter(arquivo));
         bw.write("timestamp,evento,semana,descricao");
         bw.newLine();

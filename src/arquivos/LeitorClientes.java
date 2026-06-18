@@ -26,9 +26,12 @@ public class LeitorClientes {
 
         Cliente cliente;
 
+
+        // passa por todas as linhas do csv de clientes
         while ((linha = br.readLine()) != null) {
             String[] campos = linha.split(",");
 
+            //cria os objetos com base no csv
             if (Objects.equals(campos[3], "restaurante")) {
                 cliente = new Restaurante(campos[1], campos[0], campos[2]);
             } else {

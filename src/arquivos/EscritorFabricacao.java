@@ -19,18 +19,23 @@ public class EscritorFabricacao {
             bw.write("=== PROGRAMAÇÃO DE FABRICAÇÃO - SEMANA " + semana + " ===");
             bw.newLine();
 
+
+            // utilizado para verificação de limite de produção na semana
             double totalSpaguetti = 0.0;
             double totalCanelone = 0.0;
             double totalTalharim = 0.0;
 
+            // itera sobre todos pedidos à fabricar
             for (Pedido p : pedidosFabricar) {
 
                 String forma = p.getProduto().getForma().toLowerCase();
+                // esse if verifica as formas, verifica se o pedido excede a produção semanal e decide se deve ser produzido ou não
                 if (forma.equals("spaguetti")) {
                     try {
                         if (totalSpaguetti + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
                             pedidosCancelados.add(p);
 
+                            // caso tenhamos essa excessão, arremessamos nossa excessão criada
                             throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalSpaguetti,
                                     p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalSpaguetti);
                         } else {
@@ -45,6 +50,7 @@ public class EscritorFabricacao {
                         if (totalCanelone + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
                             pedidosCancelados.add(p);
 
+                            // caso tenhamos essa excessão, arremessamos nossa excessão criada
                             throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalCanelone,
                                     p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalCanelone);
                         } else {
@@ -59,6 +65,7 @@ public class EscritorFabricacao {
                         if (totalTalharim + p.getQuantidade() > p.getProduto().getMaxProducaoSemanal()) {
                             pedidosCancelados.add(p);
 
+                            // caso tenhamos essa excessão, arremessamos nossa excessão criada
                             throw new CapacidadeExcedidaException(p.getProduto().getForma(), p.getQuantidade() + totalTalharim,
                                     p.getProduto().getMaxProducaoSemanal(), p.getProduto().getMaxProducaoSemanal() - totalTalharim);
                         } else {
@@ -79,6 +86,7 @@ public class EscritorFabricacao {
                 bw.newLine();
             }
 
+            // logs padronizados
             bw.write("--- RESUMO DA PRODUÇÃO ---");
             bw.newLine();
             bw.write("Total Spaguetti: " + totalSpaguetti + " kg / " + Produtos.Spaguetti.MAX_PRODUCAO + " kg");
@@ -89,6 +97,8 @@ public class EscritorFabricacao {
             bw.newLine();
             bw.newLine();
         }
+
+        // chama a função de escrita de pedidos cancelados caso precise
         if (!pedidosCancelados.isEmpty()) {
             EscritorCancelados escritorCancelados = new EscritorCancelados();
             escritorCancelados.escrever(pedidosCancelados, GeradorCaminhos.gerarCaminho("log_cancelados.txt", semana), semana);

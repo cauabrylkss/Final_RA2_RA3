@@ -7,14 +7,15 @@ import java.io.Serializable;
 
 public class Pedido implements Serializable {
 
+    // Será usada na serialização, todas as classes tem
     private static final long serialVersionUID = 1L;
+
     protected int id;
     protected static int contador_id = 0;
     protected String cnpjCliente;
     private Produto produto;
     private double quantidade;
     private Cliente cliente;
-    protected StatusPedido statusPedido;
 
     public Pedido(Cliente cliente, Produto produto, double quantidade){
         this.id = ++contador_id;
@@ -22,27 +23,26 @@ public class Pedido implements Serializable {
         this.cnpjCliente = cliente.getCnpj();
         this.produto = produto;
         this.quantidade = quantidade;
-        this.statusPedido = StatusPedido.PEDIDO;
     }
-    public void setStatus(StatusPedido status)   { this.statusPedido = status; }
 
+
+    // Getters
     public int     getId()      { return id; }
     public String  getCnpjCliente() { return cnpjCliente; }
     public Produto getProduto()     { return produto; }
     public double  getQuantidade()  { return quantidade; }
-    public StatusPedido getStatus()              { return statusPedido; }
-
     public double getValorItem() {
         return produto.getPrecoPorKg() * quantidade;
     }
-
     public Cliente getCliente(){return this.cliente;}
 
+
+    // Utilizado para criacao de Logs com atributos de todas as classes, sem ter que dar um get em cada elemento por vez dentro das classes criadoras de logs
     @Override
     public String toString() {
         return "\t- PEDIDO #" + this.id
                 + " | CNPJ: " + cnpjCliente
-                + " |TIPO: " + produto.getForma()
+                + " | TIPO: " + produto.getForma()
                 + " | PESO: " + quantidade + " KG"
                 + " | PRECO/KG: " + String.format("%.2f", produto.getPrecoPorKg())
                 + " | TOTAL: R$ " + String.format("%.2f", getValorItem());

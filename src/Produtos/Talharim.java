@@ -10,9 +10,10 @@ public class Talharim extends Produto implements Serializable {
     public Talharim(){
         super(16.0);
     }
+
+    // sobreescrita dos métodos abstratos
     @Override
     public double getMaxProducaoSemanal() { return MAX_PRODUCAO; }
-
     @Override
     public String getForma() { return "TALHARIM"; }
 

@@ -10,11 +10,11 @@ public class Supermercado extends Cliente implements Serializable {
         super(nome, CNPJ, endereco);
     }
 
+    // sobreescrita dos métodos abstratos
     @Override
     public double aplicarDesconto(double valorBruto) {
         return valorBruto - (valorBruto * DESCONTO);
     }
-
     @Override
     public String getTipo() {
         return "SUPERMERCADO";

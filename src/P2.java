@@ -1,11 +1,9 @@
+import arquivos.*;
 import checkout.Pedido;
 import checkout.Entrega;
 import excecoes.CapacidadeExcedidaException;
 import interfaceGrafica.PainelPipeline;
 import usuarios.Cliente;
-import arquivos.EscritorCancelados;
-import arquivos.EscritorFabricacao;
-import arquivos.EscritorEntregas;
 import utilitarios.GeradorCaminhos;
 
 import javax.swing.*;
@@ -17,14 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class P2 {
 
     public static void main(String[] args) {
 
         ArrayList<Cliente> clientes = null;
         ArrayList<ArrayList<Pedido>> pedidosPorSemana = null;
-
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("dados.dat"))) {
             clientes = (ArrayList<Cliente>) ois.readObject();
@@ -59,18 +55,26 @@ public class P2 {
         frame.setLocationRelativeTo(null); // centraliza na tela
         frame.setVisible(true);
 
+        // Logs gerais
+        EscritorLog logGeral = new EscritorLog("log_eventos_simulacao.csv");
+
         // Lógica de simulação das semanas
         for (int i = 0; i < pedidosPorSemana.size(); i++) {
             int numeroSemana = i + 1;
+
+            logGeral.registrar(TipoEvento.INICIO, numeroSemana, "Início do tratamento dos pedidos");
+
             ArrayList<Pedido> pedidosDestaSemana = pedidosPorSemana.get(i);
 
-
-
             try {
+                logGeral.registrar(TipoEvento.INICIO, numeroSemana, "Início da produção");
                 escritorFabricacao.escrever(pedidosFabricar, GeradorCaminhos.gerarCaminho("log_fabricacao.txt", numeroSemana), numeroSemana, pedidosCancelados);
+                logGeral.registrar(TipoEvento.FIM, numeroSemana, "Fim da produção");
 
                 if (numeroSemana >= 3) {
+                    logGeral.registrar(TipoEvento.INICIO, numeroSemana, "Início das entregas");
                     escritorEntregas.escrever(entregasDaSemana, GeradorCaminhos.gerarCaminho("log_entregas.txt", numeroSemana), numeroSemana);
+                    logGeral.registrar(TipoEvento.FIM, numeroSemana, "Fim das entregas");
                 }
             } catch (IOException | CapacidadeExcedidaException e) {
                 System.out.println("Erro ao escrever log da semana " + numeroSemana + ": " + e.getMessage());
@@ -80,6 +84,7 @@ public class P2 {
             List<String> idPedidosFabricar = new ArrayList<>();
             List<String> idPedidosFeitos = new ArrayList<>();
             List<String> idEntregas = new ArrayList<>();
+
             for (Pedido p : pedidosDestaSemana){
                 idPedidosFeitos.add(String.valueOf(p.getId()));
             }
@@ -92,15 +97,10 @@ public class P2 {
             }
 
             for (Entrega e : entregasDaSemana) {
-
                 for (Object chave : e.getDicionarioPedidos().keySet()) {
-
-
                     if (chave instanceof Pedido) {
                         idEntregas.add(String.valueOf(((Pedido) chave).getId()));
-                    }
-
-                    else {
+                    } else {
                         idEntregas.add(String.valueOf(chave));
                     }
                 }
@@ -133,13 +133,17 @@ public class P2 {
                 pedidosEntregues.add(p); // Mantém o gráfico do PainelPipeline funcionando
             }
 
-
             pedidosFabricar.clear();
-
             pedidosFabricar.addAll(pedidosDestaSemana);
             pedidosDestaSemana.clear();
 
+            logGeral.registrar(TipoEvento.FIM, numeroSemana, "Fim do tratamento dos pedidos");
+        }
 
+        try {
+            logGeral.escrever();
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar log geral: " + e.getMessage());
         }
     }
 }

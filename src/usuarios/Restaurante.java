@@ -9,11 +9,11 @@ public class Restaurante extends Cliente implements Serializable {
         super(nome, CNPJ, endereco);
     }
 
+    // sobreescrita dos métodos abstratos
     @Override
     public double aplicarDesconto(double valorBruto) {
         return valorBruto;
     }
-
     @Override
     public String getTipo() {
         return "RESTAURANTE";
