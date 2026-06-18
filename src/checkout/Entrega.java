@@ -10,11 +10,11 @@ public class Entrega implements Serializable {
     // Será usada na serialização, todas as classes tem
     private static final long serialVersionUID = 1L;
 
-    Cliente cliente;
+    private Cliente cliente;
     private int id;
     private static int contador_id = 0;
     // Parte da classe que garante que uma entrega de um mesmo cliente possa receber mais de um pedido, guarda o id do pedido e o objeto do pedido
-    Map<Integer,Pedido> dicionarioPedidos = new HashMap<>();
+    private Map<Integer,Pedido> dicionarioPedidos = new HashMap<>();
     private double valorTotal;
 
 

@@ -6,8 +6,13 @@ import java.awt.geom.Path2D;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Componente visual customizado que desenha o fluxo de pedidos (Pipeline).
+ * O grid é formado por semanas (colunas) e pedidos (linhas).
+ */
 public class PainelPipeline extends JPanel {
 
+    // Constantes de layout e dimensionamento do grid (em pixels)
     private static final int MARGIN = 20;
     private static final int HEADER_HEIGHT = 38;
     private static final int ROW_HEIGHT = 72;
@@ -15,40 +20,59 @@ public class PainelPipeline extends JPanel {
     private static final int BLOCK_W = 46;
     private static final int BLOCK_H = 38;
 
+    // Paleta de cores do componente
     private static final Color BLOCK_COLOR = new Color(70, 107, 176);
     private static final Color ARROW_COLOR = new Color(90, 130, 200);
 
+    // Mapeia o ID do pedido para a linha em que ele será desenhado.
+    // O LinkedHashMap garante que os pedidos sejam listados na ordem em que apareceram.
     private final Map<String, Integer> rowByOrder = new LinkedHashMap<>();
+
+    // Armazena todos os blocos (estágios) que precisam ser renderizados na tela
     private final List<BlockData> allBlocks = new ArrayList<>();
+
+    // Rastreia a quantidade de colunas para ajustar a largura do painel
     private int maxWeek = 0;
 
     public PainelPipeline() {
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(800, 300));
+        setPreferredSize(new Dimension(800, 300)); // Tamanho base inicial
     }
 
+    /**
+     * Alimenta o painel com os dados processados de uma semana.
+     * Este método é thread-safe (seguro para ser chamado fora da thread de UI).
+     */
     public void addWeekData(int semana, List<String> pedidos, List<String> fabricacoes, List<String> entregas) {
+        // Redireciona a execução para a Event Dispatch Thread (EDT) se necessário,
+        // evitando travamentos na interface gráfica (ConcurrentModificationException).
         if (!SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(() -> addWeekData(semana, pedidos, fabricacoes, entregas));
             return;
         }
 
         maxWeek = Math.max(maxWeek, semana);
+
         registrarBlocos(semana, "P", pedidos);
         registrarBlocos(semana, "F", fabricacoes);
         registrarBlocos(semana, "E", entregas);
+
+        // Atualiza as dimensões para o JScrollPane saber se precisa mostrar as barras de rolagem
         atualizarTamanhoPreferido();
         revalidate();
         repaint();
     }
 
+    // Registra os blocos no estado da classe para posterior renderização
     private void registrarBlocos(int semana, String estagio, List<String> ids) {
         for (String id : ids) {
+            // Se o pedido ainda não tem uma linha alocada, cria uma nova linha para ele
             rowByOrder.computeIfAbsent(id, k -> rowByOrder.size() + 1);
             allBlocks.add(new BlockData(id, estagio, semana));
         }
     }
 
+    // Calcula o tamanho total do canvas baseado na quantidade de semanas e pedidos existentes
     private void atualizarTamanhoPreferido() {
         int w = MARGIN * 2 + WEEK_WIDTH * maxWeek;
         int h = MARGIN * 2 + HEADER_HEIGHT + ROW_HEIGHT * rowByOrder.size() + MARGIN;
@@ -59,17 +83,21 @@ public class PainelPipeline extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
+
+        // Ativa o anti-aliasing para deixar os contornos e fontes mais suaves e legíveis
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
+        // Ordem de desenho importa (quem é desenhado primeiro fica no fundo)
         desenharCabecalhos(g2);
         desenharSeparadores(g2);
         desenharSetas(g2);
         desenharBlocos(g2);
 
-        g2.dispose();
+        g2.dispose(); // Libera os recursos do contexto gráfico
     }
 
+    // Desenha as tarjas pretas no topo de cada coluna com o título "Semana N"
     private void desenharCabecalhos(Graphics2D g2) {
         g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
         FontMetrics fm = g2.getFontMetrics();
@@ -88,6 +116,7 @@ public class PainelPipeline extends JPanel {
         }
     }
 
+    // Desenha as linhas verticais que delimitam visualmente o espaço de cada semana
     private void desenharSeparadores(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1f));
         g2.setColor(Color.BLACK);
@@ -98,7 +127,9 @@ public class PainelPipeline extends JPanel {
         }
     }
 
+    // Conecta os blocos do mesmo pedido ao longo das semanas
     private void desenharSetas(Graphics2D g2) {
+        // Primeiro, agrupa os blocos pelo ID do pedido
         Map<String, List<BlockData>> porPedido = new LinkedHashMap<>();
         for (BlockData b : allBlocks) {
             porPedido.computeIfAbsent(b.orderId, k -> new ArrayList<>()).add(b);
@@ -108,30 +139,38 @@ public class PainelPipeline extends JPanel {
         g2.setStroke(new BasicStroke(1.5f));
 
         for (List<BlockData> lista : porPedido.values()) {
+            // Ordena cronologicamente para ligar os blocos na direção certa (esquerda -> direita)
             lista.sort(Comparator.comparingInt(b -> b.week));
+
             for (int i = 0; i < lista.size() - 1; i++) {
                 Point de = centroBloco(lista.get(i));
                 Point para = centroBloco(lista.get(i + 1));
 
+                // Ajusta os pontos para a seta não invadir o desenho do bloco
                 int x1 = de.x + BLOCK_W / 2;
                 int x2 = para.x - BLOCK_W / 2;
+
                 g2.drawLine(x1, de.y, x2, para.y);
                 desenharPontaFlecha(g2, x1, de.y, x2, para.y);
             }
         }
     }
 
+    // Usa trigonometria básica para desenhar e rotacionar o triângulo na ponta da seta
     private void desenharPontaFlecha(Graphics2D g2, int x1, int y1, int x2, int y2) {
         double angulo = Math.atan2(y2 - y1, x2 - x1);
         int tamanho = 9;
         Path2D flecha = new Path2D.Float();
+
         flecha.moveTo(x2, y2);
         flecha.lineTo(x2 - tamanho * Math.cos(angulo - 0.38), y2 - tamanho * Math.sin(angulo - 0.38));
         flecha.lineTo(x2 - tamanho * Math.cos(angulo + 0.38), y2 - tamanho * Math.sin(angulo + 0.38));
         flecha.closePath();
+
         g2.fill(flecha);
     }
 
+    // Desenha os quadrados coloridos com a letra representando o estágio do pedido
     private void desenharBlocos(Graphics2D g2) {
         g2.setFont(new Font("Segoe UI", Font.BOLD, 15));
         FontMetrics fm = g2.getFontMetrics();
@@ -144,6 +183,7 @@ public class PainelPipeline extends JPanel {
             g2.setColor(BLOCK_COLOR);
             g2.fillRect(bx, by, BLOCK_W, BLOCK_H);
 
+            // Centraliza o texto (P, F ou E) matematicamente dentro do bloco
             g2.setColor(Color.WHITE);
             int tx = bx + (BLOCK_W - fm.stringWidth(b.stage)) / 2;
             int ty = by + (BLOCK_H + fm.getAscent() - fm.getDescent()) / 2;
@@ -151,6 +191,7 @@ public class PainelPipeline extends JPanel {
         }
     }
 
+    // Calcula a coordenada exata do centro geométrico de um bloco baseado em sua linha e coluna
     private Point centroBloco(BlockData b) {
         int linha = rowByOrder.get(b.orderId);
         int cx = MARGIN + (b.week - 1) * WEEK_WIDTH + WEEK_WIDTH / 2;
@@ -158,6 +199,7 @@ public class PainelPipeline extends JPanel {
         return new Point(cx, cy);
     }
 
+    // Estrutura de dados interna para carregar as informações essenciais de cada bloco na tela
     private static final class BlockData {
         final String orderId;
         final String stage;
