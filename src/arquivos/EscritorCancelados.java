@@ -14,10 +14,13 @@ public class EscritorCancelados {
             bw.write("=== PEDIDOS CANCELADOS - SEMANA " + semana + " ===");
             bw.newLine();
 
+            // caso esteja vazia avisa que não há cancelamentos
             if (pedidosCancelados.isEmpty()) {
                 bw.write("Nenhum pedido cancelado nesta semana.");
                 bw.newLine();
             } else {
+
+                // escreve todos cancelamentos e separa por "-------"
                 for (Pedido p : pedidosCancelados) {
                     bw.write("Pedido #" + p.getId() + " | CNPJ: " + p.getCnpjCliente() +
                             " | Produto: " + p.getProduto().getForma() +

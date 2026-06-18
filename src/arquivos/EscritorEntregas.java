@@ -13,10 +13,14 @@ public class EscritorEntregas {
             bw.write("=== PROGRAMAÇÃO DE ENTREGAS - SEMANA " + semana + " ===");
             bw.newLine();
 
+
+            // caso esteja vazia avisa que não há entregas
             if (entregas.isEmpty()) {
                 bw.write("Nenhuma entrega programada para esta semana.");
                 bw.newLine();
             } else {
+
+                // escreve todas entregas e separa por "-------"
                 for (Entrega entrega : entregas) {
 
                     bw.write(entrega.toString());
