@@ -21,7 +21,6 @@ public class Entrega implements Serializable {
         this.dicionarioPedidos.put(pedido.getId(), pedido);
         this.id = ++contador_id;
         this.cliente = cliente;
-        this.dicionarioPedidos = new HashMap<>();
         this.valorTotal = 0.0;
     }
 

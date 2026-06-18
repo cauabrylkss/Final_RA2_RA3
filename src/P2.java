@@ -13,7 +13,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class P2 {
@@ -113,17 +115,30 @@ public class P2 {
 
             entregasDaSemana.clear();
             pedidosEntregues.clear();
+            pedidosCancelados.clear();
 
-            for (Pedido p : pedidosFabricar){
-                Entrega entregaPedido = new Entrega(p.getCliente(), p);
-                entregasDaSemana.add(entregaPedido);
-                pedidosEntregues.add(p);
+            Map<String, Entrega> entregasPorCliente = new HashMap<>();
+
+            for (Pedido p : pedidosFabricar) {
+                String cnpj = p.getCnpjCliente();
+
+                if (entregasPorCliente.containsKey(cnpj)) {
+                    entregasPorCliente.get(cnpj).adicionarPedido(p);
+                } else {
+                    Entrega novaEntrega = new Entrega(p.getCliente(), p);
+                    entregasPorCliente.put(cnpj, novaEntrega);
+                    entregasDaSemana.add(novaEntrega);
+                }
+
+                pedidosEntregues.add(p); // Mantém o gráfico do PainelPipeline funcionando
             }
+
+
             pedidosFabricar.clear();
 
             pedidosFabricar.addAll(pedidosDestaSemana);
             pedidosDestaSemana.clear();
-            pedidosCancelados.clear();
+
 
         }
     }

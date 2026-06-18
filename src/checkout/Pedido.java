@@ -40,10 +40,11 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido #" + this.id + "CNPJ: "
-                + cnpjCliente + produto.getForma()
-                + quantidade + " kg"
-                + "Preco/Kg: " + String.format("%.2f", produto.getPrecoPorKg())
-                + "Total: R$ " + String.format("%.2f", getValorItem());
+        return "\t- PEDIDO #" + this.id
+                + " | CNPJ: " + cnpjCliente
+                + " |TIPO: " + produto.getForma()
+                + " | PESO: " + quantidade + " KG"
+                + " | PRECO/KG: " + String.format("%.2f", produto.getPrecoPorKg())
+                + " | TOTAL: R$ " + String.format("%.2f", getValorItem());
     }
 }
